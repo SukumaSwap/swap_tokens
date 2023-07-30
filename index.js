@@ -90,4 +90,4 @@ document.getElementById("to_token_select").onclick = () => {
   openModal("to");
 };
 document.getElementById("modal_close").onclick = closeModal;
-
+document.getElementById("modal_close").onblur = getPrice;
