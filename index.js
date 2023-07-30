@@ -23,6 +23,9 @@ async function init() {
           `;
         div.innerHTML = html;
         parent.appendChild(div);
+//fetch token selected
+
+
     };
   }
   
