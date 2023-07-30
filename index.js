@@ -1,6 +1,7 @@
 //global variables
 let currentTrade={};
 let currentSelectedSide;
+let tokens;
 
 async function init() {
     await listAvailableTokens();
@@ -11,6 +12,7 @@ async function init() {
     let response = await fetch('https://tokens.coingecko.com/uniswap/all.json');
     let tokenListJSON = await response.json();
     console.log("listing available tokens: ", tokenListJSON);
+    console.log(tokenListJSON);
     tokens = tokenListJSON.tokens;
     console.log("tokens: ", tokens);
   
@@ -26,18 +28,29 @@ async function init() {
           `;
         div.innerHTML = html;
         parent.appendChild(div);
+    }
+};
 //fetch token selected
-selectedToken(tokens[i]);
+// selectedToken(tokens[i]);
 
 async function selectedToken(token){
 closeModal();
 currentTrade[currentSelectedSide]=token;
 console.log("currentTrade",currentTrade);
 }
+ 
+//function to render token
+function renderInterface(){
+    if(currentTrade.from){
+        document.getElementById("from_token_img").src=currentTrade.from.logoURI;
+        document.getElementById("from_text_text").innerHTML=currentTrade.from.symbol;
+        }
+        if(currentTrade.to){
+            document.getElementById("to_token_img").src=currentTrade.to.logoURI;
+            document.getElementById("to_token_img").src=currentTrade.to.logoURI;
+}  
+};
 
-    };
-  }
-  
   async function connect() {
     if (typeof window.ethereum !== "undefined") {
         try {
@@ -55,7 +68,7 @@ console.log("currentTrade",currentTrade);
         }
     }
   
-    init();
+    
   
     function openModal(side){
         currentSelectedSide=side;
@@ -66,6 +79,8 @@ console.log("currentTrade",currentTrade);
     document.getElementById("token_modal").style.display = "none";
     }
   
+    init();
+
     document.getElementById("login_button").onclick = connect;
     document.getElementById("from_token_select").onclick = () => {openModal("from")};
     document.getElementById("modal_close").onclick = closeModal;
