@@ -1,4 +1,7 @@
-// index.js
+//global variables
+let currentTrade={};
+let currentSelectedSide;
+
 async function init() {
     await listAvailableTokens();
   }
