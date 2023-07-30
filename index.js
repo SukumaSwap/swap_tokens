@@ -55,7 +55,8 @@ async function selectedToken(){
   
     init();
   
-    function openModal(){
+    function openModal(side){
+        currentSelectedSide=side;
         document.getElementById("token_modal").style.display = "block";
     }
   
@@ -64,6 +65,6 @@ async function selectedToken(){
     }
   
     document.getElementById("login_button").onclick = connect;
-    document.getElementById("from_token_select").onclick = openModal;
+    document.getElementById("from_token_select").onclick = () => {openModal("from")};
     document.getElementById("modal_close").onclick = closeModal;
   
