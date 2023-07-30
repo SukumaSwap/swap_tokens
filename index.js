@@ -83,6 +83,9 @@ function closeModal(){
 async function getPrice(){
     console.log("getting current price");
     if(!currentTrade.from || currentTrade.to ||!document.getElementById("from_amount").value)return;
+    //convert inputed number to base number of the token
+    let amount = Number(document.getElementById("from_amount").value * 10 ** currentTrade.from.decimals);
+
     
 }
 init();
