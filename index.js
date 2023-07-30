@@ -1,24 +1,23 @@
-
 let currentTrade = {};
 let currentSelectSide;
 let tokens;
 
-async function init(){
+async function init() {
   await listAvailableTokens();
 }
 
-async function listAvailableTokens(){
+async function listAvailableTokens() {
   console.log("initializing");
-  let response = await fetch('https://tokens.coingecko.com/uniswap/all.json');
+  let response = await fetch("https://tokens.coingecko.com/uniswap/all.json");
   let tokenListJSON = await response.json();
   console.log("listing available tokens");
   console.log(tokenListJSON);
-  tokens = tokenListJSON.tokens
+  tokens = tokenListJSON.tokens;
   console.log("tokens:", tokens);
 
   // create token list for modal
   let parent = document.getElementById("token_list");
-  for (const i in tokens){
+  for (const i in tokens) {
     // token row in the modal token list
     let div = document.createElement("div");
     div.className = "token_row";
@@ -37,56 +36,69 @@ async function listAvailableTokens(){
 function selectToken(token) {
   closeModal();
   currentTrade[currentSelectSide] = token;
-  console.log("currentTrade:" , currentTrade);
+  console.log("currentTrade:", currentTrade);
   renderInterface();
 }
 
-function renderInterface(){
+function renderInterface() {
   if (currentTrade.from) {
-    console.log(currentTrade.from)
+    console.log(currentTrade.from);
     document.getElementById("from_token_img").src = currentTrade.from.logoURI;
-    document.getElementById("from_token_text").innerHTML = currentTrade.from.symbol;
+    document.getElementById("from_token_text").innerHTML =
+      currentTrade.from.symbol;
   }
   if (currentTrade.to) {
     document.getElementById("to_token_img").src = currentTrade.to.logoURI;
     document.getElementById("to_token_text").innerHTML = currentTrade.to.symbol;
   }
-
 }
 
 async function connect() {
-    if (typeof window.ethereum !== "undefined") {
-        try {
-          console.log("connecting");
-          await ethereum.request({ method: "eth_requestAccounts" });
-        } catch (error) {
-          console.log(error);
-        }
-        document.getElementById("login_button").innerHTML = "Connected";
-        // const accounts = await ethereum.request({ method: "eth_accounts" });
-        document.getElementById("swap_button").disabled = false;
-      } else {
-        document.getElementById("login_button").innerHTML =
-          "Please install MetaMask";
-      }
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      console.log("connecting");
+      await ethereum.request({ method: "eth_requestAccounts" });
+    } catch (error) {
+      console.log(error);
     }
-
-function openModal(side){
-    currentSelectSide = side;
-    document.getElementById("token_modal").style.display = "block";
+    document.getElementById("login_button").innerHTML = "Connected";
+    // const accounts = await ethereum.request({ method: "eth_accounts" });
+    document.getElementById("swap_button").disabled = false;
+  } else {
+    document.getElementById("login_button").innerHTML =
+      "Please install MetaMask";
+  }
 }
 
-function closeModal(){
+function openModal(side) {
+  currentSelectSide = side;
+  document.getElementById("token_modal").style.display = "block";
+}
+
+function closeModal() {
   document.getElementById("token_modal").style.display = "none";
 }
 
-async function getPrice(){
-    console.log("getting current price");
-    if(!currentTrade.from || currentTrade.to ||!document.getElementById("from_amount").value)return;
-    //convert inputed number to base number of the token
-    let amount = Number(document.getElementById("from_amount").value * 10 ** currentTrade.from.decimals);
-
-    
+async function getPrice() {
+  console.log("getting current price");
+  if (
+    !currentTrade.from ||
+    currentTrade.to ||
+    !document.getElementById("from_amount").value
+  )
+    return;
+  //convert inputed number to base number of the token
+  let amount = Number(
+    document.getElementById("from_amount").value *
+      10 ** currentTrade.from.decimals
+  );
+  //params
+  const params={
+    sellToken:currentTrade.from.address,
+    butToken:currentTrade.to.address,
+    sellToken:amount
+  }
+  
 }
 init();
 
