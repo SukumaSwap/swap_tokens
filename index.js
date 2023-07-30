@@ -24,7 +24,11 @@ async function init() {
         div.innerHTML = html;
         parent.appendChild(div);
 //fetch token selected
+selectedToken(tokens[i]);
 
+async function selectedToken(){
+
+}
 
     };
   }
