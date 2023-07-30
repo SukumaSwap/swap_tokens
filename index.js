@@ -30,7 +30,7 @@ async function init() {
 selectedToken(tokens[i]);
 
 async function selectedToken(){
-
+closeModal();
 }
 
     };
