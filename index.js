@@ -29,8 +29,10 @@ async function init() {
 //fetch token selected
 selectedToken(tokens[i]);
 
-async function selectedToken(){
+async function selectedToken(token){
 closeModal();
+currentTrade[currentSelectedSide]=token;
+console.log("currentTrade",currentTrade);
 }
 
     };
