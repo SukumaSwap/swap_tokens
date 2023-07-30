@@ -80,6 +80,11 @@ function closeModal(){
   document.getElementById("token_modal").style.display = "none";
 }
 
+async function getPrice(){
+    console.log("getting current price");
+    if(!currentTrade.from || currentTrade.to ||!document.getElementById("from_amount").value)return;
+    
+}
 init();
 
 document.getElementById("login_button").onclick = connect;
