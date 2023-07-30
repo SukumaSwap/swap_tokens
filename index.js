@@ -1,3 +1,5 @@
+const qs = require('qs');
+
 let currentTrade = {};
 let currentSelectSide;
 let tokens;
@@ -98,8 +100,11 @@ async function getPrice() {
     butToken:currentTrade.to.address,
     sellToken:amount
   }
-  
+  //fetch the swap price
+  // const response= await fetch (`https://api.0x.org/swap/v1/price?${qs.stringify(params), { hearders }`);
+
 }
+
 init();
 
 document.getElementById("login_button").onclick = connect;
