@@ -12,4 +12,7 @@ async function connect() {
         document.getElementById("login_button").innerHTML =
           "Please install MetaMask";
       }
+      document.getElementById("login_button").onclick = connect;
+      document.getElementById("from_token_select").onclick = openModal;
+      document.getElementById("modal_close").onclick = closeModal;
     }
