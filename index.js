@@ -3,6 +3,7 @@ const qs = require('qs');
 let currentTrade = {};
 let currentSelectSide;
 let tokens;
+require('dotenv').config(); // Load the .env file
 
 async function init() {
   await listAvailableTokens();
@@ -100,8 +101,14 @@ async function getPrice() {
     butToken:currentTrade.to.address,
     sellToken:amount
   }
+
   //fetch the swap price
-  // const response= await fetch (`https://api.0x.org/swap/v1/price?${qs.stringify(params), { hearders }`);
+  const privateKey = process.env.PRIVATE_KEY;
+  const headers ={
+    '0x-api-key': privatekey // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+};
+ const response = await fetch(`https://api.0x.org/swap/v1/price?${qs.stringify(params)} `, { headers });
+swapPriceJSON=await response.json();
 
 }
 
