@@ -4,6 +4,9 @@ let currentTrade = {};
 let currentSelectSide;
 let tokens;
 
+    
+const privatekey= process.env.PRIVATE_KEY;
+
 async function init() {
     await listAvailableTokens();
 }
@@ -90,8 +93,6 @@ async function getPrice(){
         buyToken: currentTrade.to.address,
         sellAmount: amount,
     }
-    
-    const privatekey= process.env.PRIVATE_KEY;
     const headers = {'0x-api-key': privatekey}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
   
     // Fetch the swap price.
@@ -103,7 +104,7 @@ async function getPrice(){
     document.getElementById("to_amount").value = swapPriceJSON.buyAmount / (10 ** currentTrade.to.decimals);
     document.getElementById("gas_estimate").innerHTML = swapPriceJSON.estimatedGas;
 }
-
+//function to getquote,only diffrence from getprice is mst be passed in taker address
 async function getQuote(account){
     console.log("Getting Quote");
   
@@ -117,7 +118,7 @@ async function getQuote(account){
         takerAddress: account,
     }
 
-    const headers = {'0x-api-key': [api-key]}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+    const headers = {'0x-api-key': privatekey }; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
   
     // Fetch the swap quote.
     const response = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`, { headers });
