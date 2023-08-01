@@ -131,7 +131,14 @@ async function getQuote(account){
   
     return swapQuoteJSON;
 }
+//setting token allowance
+async function trySwap(){
+    let accounts=await ethereum.request( {method:"eth_accounts"});
+    let takerAddress=accounts[0];
+    console.log("talerAddress:",takerAddress);
+    const swapQuoteJSON= await getQuote(takerAddress);
 
+}
 init();
 
 document.getElementById("login_button").onclick = connect;
