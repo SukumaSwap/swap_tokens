@@ -104,6 +104,7 @@ async function getPrice() {
 
   //fetch the swap price
   const privateKey = process.env.PRIVATE_KEY;
+  // 
   const headers ={
     '0x-api-key': privateKey // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
