@@ -105,11 +105,14 @@ async function getPrice() {
   //fetch the swap price
   const privateKey = process.env.PRIVATE_KEY;
   const headers ={
-    '0x-api-key': privatekey // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
+    '0x-api-key': privateKey // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
 };
  const response = await fetch(`https://api.0x.org/swap/v1/price?${qs.stringify(params)} `, { headers });
 swapPriceJSON=await response.json();
+console.log("Price:",swapPriceJSON);
 
+document.getElementById("to_amount").value = swapPriceJSON.buyAmount / (10 ** currentTrade.to.decimals);
+document.getElementById("gas_estimate").innerHTML = swapPriceJSON.estimatedGas;
 }
 
 init();
