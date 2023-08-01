@@ -13,3 +13,5 @@ npx browserify index.js --standalone bundle -o bundle.js
 price aggregators include:mobula  and https://dashboard.0x.org/apps
 
 endpoint to fetch token symbol and name : https://tokens.coingecko.com/uniswap/all.json
+
+API to convert token price to  any fiat currency : https://api.coingecko.com/api/v3/simple/price'
