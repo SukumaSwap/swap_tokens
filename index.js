@@ -1,3 +1,5 @@
+// const BigNumber = require('bignumber.js');
+const web3 = require('web3');
 const qs = require('qs');
 
 let currentTrade = {};
@@ -131,12 +133,25 @@ async function getQuote(account){
   
     return swapQuoteJSON;
 }
-//setting token allowance
+
 async function trySwap(){
     let accounts=await ethereum.request( {method:"eth_accounts"});
     let takerAddress=accounts[0];
-    console.log("talerAddress:",takerAddress);
+    console.log("takerAddress:",takerAddress);
     const swapQuoteJSON= await getQuote(takerAddress);
+//setting token allowance
+const web3 = new Web3(Web3.givenProvider); //connecting to etheteum:metamask && only work if metamask connected
+//iteracting with ERC20TokenContract
+const fromTokenAddress = currentTrade.from.address;
+const erc20abi=[ { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approve", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "_owner", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "balance", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" } ];
+const ERC20TokenContract = new web3.eth.Contract(erc20abi, fromTokenAddress);
+console.log('ERC20TokenContract:',ERC20TokenContract) ;
+//setting allowance target i.e exhange i.e OXapi proxy address
+const maxApproval =new BigNumber(2).pow(256).minus(1);
+ERC20TokenContract.methods.approve(
+    swapQuoteJSON.allowanceTargt,
+    maxApproval,
+)
 
 }
 init();
@@ -150,3 +165,4 @@ document.getElementById("to_token_select").onclick = () => {
 };
 document.getElementById("modal_close").onclick = closeModal;
 document.getElementById("from_amount").onblur = getPrice;
+document.getElementById("from_amount").onblur = trySwap;
