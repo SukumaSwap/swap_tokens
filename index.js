@@ -148,12 +148,17 @@ const ERC20TokenContract = new web3.eth.Contract(erc20abi, fromTokenAddress);
 console.log('ERC20TokenContract:',ERC20TokenContract) ;
 //setting allowance target i.e exhange i.e OXapi proxy address
 const maxApproval =new BigNumber(2).pow(256).minus(1);
-ERC20TokenContract.methods.approve(
+// Grant the allowance target an allowance to spend our tokens.
+const tx= ERC20TokenContract.methods.approve(
     swapQuoteJSON.allowanceTargt,
     maxApproval,
-)
+) .send({ from: takerAddress })
+.then(tx => {
+    console.log("tx: ", tx)
+});
 
 }
+
 init();
 
 document.getElementById("login_button").onclick = connect;
