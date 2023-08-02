@@ -1,4 +1,4 @@
-// const BigNumber = require('bignumber.js');
+const BigNumber = require('bignumber.js');
 const web3 = require('web3');
 const qs = require('qs');
 
@@ -95,6 +95,7 @@ async function getPrice(){
         buyToken: currentTrade.to.address,
         sellAmount: amount,
     }
+
     const headers = {'0x-api-key': privatekey}; // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
   
     // Fetch the swap price.
@@ -149,17 +150,18 @@ console.log('ERC20TokenContract:',ERC20TokenContract) ;
 //setting allowance target i.e exhange i.e OXapi proxy address
 const maxApproval =new BigNumber(2).pow(256).minus(1);
 // Grant the allowance target an allowance to spend our tokens.
-const tx= ERC20TokenContract.methods.approve(
+ const tx = ERC20TokenContract.methods.approve(
     swapQuoteJSON.allowanceTargt,
     maxApproval,
-) .send({ from: takerAddress })
+) 
+.send({ from: takerAddress })
 .then(tx => {
     console.log("tx: ", tx)
 });
  // Perform the swap
  const receipt = await web3.eth.sendTransaction(swapQuoteJSON);
  console.log("receipt: ", receipt);
- 
+
 }
 
 init();
@@ -173,4 +175,4 @@ document.getElementById("to_token_select").onclick = () => {
 };
 document.getElementById("modal_close").onclick = closeModal;
 document.getElementById("from_amount").onblur = getPrice;
-document.getElementById("from_amount").onblur = trySwap;
+document.getElementById("swap_button").onclick = trySwap;

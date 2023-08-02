@@ -16,3 +16,4 @@ endpoint to fetch token symbol and name : https://tokens.coingecko.com/uniswap/a
 
 API to convert token price to  any fiat currency : https://api.coingecko.com/api/v3/simple/price'
 erc20 abi can be found here https://gist.github.com/veox/8800debbf56e24718f9f483e1e40c35c
+to install bignumber linbrary npm install bignumber.js
