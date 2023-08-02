@@ -1,4 +1,4 @@
-const {erc20abi} =require("./abi");
+// const {erc20abi} =require("./abi");
 const BigNumber = require("bignumber.js");
 const web3 = require("web3");
 const qs = require("qs");
